@@ -1,8 +1,49 @@
-Read me
-Structure du code
+README - pole_project/code
 
-- fonctions pour acquérir les données des différents capteurs et les convertis en grandeurs usuelles
-- fonction qui renvoie la commande moteur en fonction des données acquéries.
+Objectif
+- Simuler la boucle de pilotage de barre a partir de donnees capteurs.
+- Garder une architecture proche du systeme reel: 1 capteur = 1 fichier.
+- Permettre de remplacer facilement la source CSV par des capteurs physiques.
 
-folder recuperation_var permet de recuperer les variabel
+Structure actuelle
+- test_csv.py
+	- Boucle de simulation principale.
+	- Lecture/algorithme a cadence fixe (par defaut 0.5 s).
+	- Mise a jour de la barre a cadence fixe independante (par defaut 0.7 s).
+
+- commande.py
+	- Calcul de commande de barre (PID simple sur erreur de cap).
+	- Fonction de normalisation de l'erreur de cap (gestion du 0/360 deg).
+
+- donnees_capteurs_test.csv
+	- Jeu de donnees de test (cap consigne, cap compas, potentiometre, vent).
+
+- recuperation_var/
+	- source_donnees.py: charge les mesures CSV et expose la mesure courante.
+	- recuperation_cap_consigne.py: cap de consigne.
+	- recuperation_compas.py: cap compas.
+	- recuperation_potentiometre.py: position potentiometre.
+	- recuperation_vent.py: direction et vitesse du vent.
+	- out_var.py: facade unique pour lire les entrees capteurs.
+
+Principe de fonctionnement
+1. test_csv.py initialise la source via out_var.initialiser_source_csv(...).
+2. A chaque cycle, test_csv.py lit les entrees via out_var.lire_entree_capteurs(i).
+3. L'algo calcule la commande de barre a chaque lecture capteur.
+4. La consigne appliquee a la barre est mise a jour selon dt-barre.
+
+Commandes utiles (depuis le dossier pole_project)
+- Lancer la simulation avec timings projet:
+	python .\code\test_csv.py --dt-capteurs 0.5 --dt-barre 0.7
+
+- Jouer plus vite/lentement:
+	python .\code\test_csv.py --dt-capteurs 0.2 --dt-barre 0.5
+
+- Utiliser un autre fichier CSV:
+	python .\code\test_csv.py --csv .\code\mon_test.csv --dt-capteurs 0.5 --dt-barre 0.7
+
+Passage au reel (idee)
+- Conserver la meme interface dans recuperation_var/ (compas(), potentiometre(), etc.).
+- Remplacer la lecture CSV de source_donnees.py par des lectures capteurs physiques.
+- Le reste du code (test_csv.py / commande.py) pourra rester presque identique.
 
