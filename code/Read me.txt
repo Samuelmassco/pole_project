@@ -3,3 +3,6 @@ Structure du code
 
 - fonctions pour acquérir les données des différents capteurs et les convertis en grandeurs usuelles
 - fonction qui renvoie la commande moteur en fonction des données acquéries.
+
+folder recuperation_var permet de recuperer les variabel
+

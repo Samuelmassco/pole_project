@@ -1,0 +1,1 @@
+#recupere les variables du potentiometre et sort un l'ouput comme un triple (x,y,z)
