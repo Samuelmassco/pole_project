@@ -1,6 +1,6 @@
-# recupere les variables de la boussole et sort un l'ouput comme un triple (x,y,z)
+from .source_donnees import mesure_courante
 
-def compas():
-    pass
-    output_compas=(x,y,z)
-    return output_compas
+
+def compas() -> float:
+    """Retourne le cap compas (degres) de la mesure courante."""
+    return mesure_courante()["cap_compas_deg"]

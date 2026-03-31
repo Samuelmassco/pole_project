@@ -51,3 +51,7 @@ def get_etat_potentiometre():
 		"actuel": np.array([potentiometre_actuel], dtype=object),
 		"passees": potentiometre_l.copy(),
 	}
+
+
+
+
